@@ -1,0 +1,42 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(USER)
+  image     String?
+  bookmarks Link[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+
+// make a link model with id, createdAt, updatedAt, title, description, url, imageUrl, category
+model Link {
+  id          Int      @id 
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  description String
+  url         String
+  imageUrl    String
+  category    String
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+
+}
