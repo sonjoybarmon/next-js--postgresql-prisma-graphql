@@ -15,3 +15,5 @@ export const typeDefs = gql`
     links: [Link!]!
   }
 `;
+
+export default typeDefs;
